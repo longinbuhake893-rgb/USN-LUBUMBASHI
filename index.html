@@ -1757,19 +1757,7 @@ async function partagerLienDepuisPartage(){
 
     const org=organisations[parseInt(select.value,10)];
 
-    /*
-       Le partage natif de Chrome peut provoquer une erreur lorsque
-       index.html est encore ouvert en local (file://).
-       On ne l'appelle donc que sur une vraie page sécurisée.
-       Sinon, on utilise le système de copie déjà fonctionnel.
-    */
-    const partageNatifDisponible =
-        typeof navigator !== "undefined" &&
-        typeof navigator.share === "function" &&
-        window.isSecureContext &&
-        location.protocol !== "file:";
-
-    if(partageNatifDisponible){
+    if(navigator.share){
         try{
             await navigator.share({
                 title:"Inscription responsable — USN Lubumbashi",
@@ -1780,7 +1768,6 @@ async function partagerLienDepuisPartage(){
             });
             return;
         }catch(e){
-            /* Annulation ou refus du partage : on passe au secours. */
             if(e && e.name==="AbortError")return;
         }
     }
@@ -1789,8 +1776,7 @@ async function partagerLienDepuisPartage(){
 
     if(ok){
         alert(
-            "📤 LIEN PRÊT À ÊTRE PARTAGÉ !\n\n"+
-            "Le partage direct n'est pas disponible dans cette ouverture du fichier.\n\n"+
+            "📤 PARTAGE DIRECT NON DISPONIBLE SUR CE NAVIGATEUR.\n\n"+
             "Le lien a été copié. Collez-le maintenant dans WhatsApp, SMS ou email."
         );
     }else{
