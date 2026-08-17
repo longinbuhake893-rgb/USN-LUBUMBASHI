@@ -1,0 +1,3876 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>USN Lubumbashi - Gestion des ASBL</title>
+
+<style>
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#1f2937;
+}
+
+header{
+    background:linear-gradient(135deg,#111827,#1e3a8a);
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.logo-usn{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 12px;
+    background:white;
+    border-radius:10px;
+    padding:5px;
+}
+
+header h1{margin:0 0 10px;font-size:28px}
+header h2{margin:5px 0;font-size:20px}
+header h3{margin:5px 0;font-size:15px}
+
+.container{
+    width:95%;
+    max-width:1450px;
+    margin:25px auto;
+}
+
+.section{
+    background:white;
+    padding:22px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+h2{color:#1e3a8a}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:10px 15px;
+    cursor:pointer;
+    background:#1e3a8a;
+    color:white;
+    font-size:14px;
+}
+
+button:hover{opacity:.9}
+
+.success{background:#15803d}
+.danger{background:#b91c1c}
+.secondary{background:#6b7280}
+.warning{background:#b45309}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+    margin:0 0 10px;
+    color:#555;
+    font-size:14px;
+}
+
+.number{
+    color:#1e3a8a;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.full{grid-column:1/-1}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:7px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.type-box{
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+}
+
+.type-box label{font-weight:normal}
+
+.domaines{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.domaines label{
+    font-weight:normal;
+    padding:8px;
+    background:#f8fafc;
+    border-radius:6px;
+}
+
+.hidden{display:none!important}
+
+.table-wrap{overflow-x:auto}
+
+table{
+    width:100%;
+    min-width:1200px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+
+th{
+    background:#1e3a8a;
+    color:white;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.valid{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.rejected{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.commission{
+    border:2px solid #1e3a8a;
+    background:#f8fafc;
+    border-radius:10px;
+    padding:20px;
+}
+
+.commission h2{text-align:center}
+
+.member-box{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:12px;
+}
+
+.details{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.detail{
+    background:#f8fafc;
+    padding:13px;
+    border-radius:7px;
+}
+
+.detail strong{
+    display:block;
+    color:#1e3a8a;
+    margin-bottom:5px;
+}
+
+.public-box{
+    border:2px solid #15803d;
+    background:#f0fdf4;
+}
+
+.public-title{
+    color:#15803d;
+    text-align:center;
+}
+
+.notice{
+    padding:15px;
+    border-radius:8px;
+    background:#eff6ff;
+    border-left:5px solid #1e3a8a;
+    margin-bottom:15px;
+}
+
+footer{
+    background:#111827;
+    color:white;
+    text-align:center;
+    padding:20px;
+    line-height:1.6;
+}
+
+.share-box{
+    border:2px solid #15803d;
+    background:#f0fdf4;
+    border-radius:10px;
+    padding:18px;
+}
+
+.link-field{
+    background:#fff;
+    font-size:13px;
+}
+
+.small-note{
+    font-size:12px;
+    color:#475569;
+    line-height:1.5;
+}
+
+.fixed-org{
+    background:#ecfdf5;
+    border:1px solid #86efac;
+    border-radius:8px;
+    padding:12px;
+}
+
+@media(max-width:700px){
+
+    .grid,.details{
+        grid-template-columns:1fr;
+    }
+
+    .domaines{
+        grid-template-columns:1fr;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+    .logo-usn{
+        width:90px;
+        height:90px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<img src="logo-usn.png"
+alt="Logo Union Sacrée de la Nation"
+class="logo-usn"
+onerror="this.style.display='none'">
+
+<h1>UNION SACRÉE DE LA NATION</h1>
+<h2>SECRÉTARIAT EXÉCUTIF URBAIN – LUBUMBASHI</h2>
+<h3>SECRÉTARIAT EXÉCUTIF ADJOINT</h3>
+<h3>EN CHARGE DES ASBL, FONDATIONS ET MOUVEMENTS</h3>
+
+</header>
+
+<div class="container">
+
+<!-- TABLEAU DE BORD -->
+
+<div class="section">
+
+<h2>📊 TABLEAU DE BORD</h2>
+
+<div class="actions">
+
+<button onclick="nouveauDossier()">➕ Nouvelle organisation</button>
+
+<button onclick="afficherRegistre()">📂 Registre</button>
+
+<button onclick="afficherResponsables()">👤 Responsables</button>
+
+<button onclick="afficherInscriptionPublique()">
+🌐 Inscription responsable
+</button>
+
+<button class="success" onclick="afficherLienPartage()">
+🔗 Lien à partager
+</button>
+
+<button onclick="afficherCommission()">👥 Commission</button>
+
+</div>
+
+</div>
+
+<!-- LIEN À PARTAGER -->
+
+<div id="partageSection" class="section share-box hidden">
+
+<h2 style="color:#15803d">🔗 LIEN D'INSCRIPTION À PARTAGER</h2>
+
+<div class="notice">
+<strong>Utilisation :</strong> choisissez une organisation, copiez le lien et envoyez-le au responsable par WhatsApp, SMS ou email.
+</div>
+
+<div class="grid">
+
+<div class="full">
+<label>Organisation concernée</label>
+<select id="organisationPartage" onchange="mettreAJourLienPartage()">
+<option value="">-- Sélectionner l'organisation --</option>
+</select>
+</div>
+
+<div class="full">
+<label>Lien à partager</label>
+<input id="lienPartage" class="link-field" readonly placeholder="Le lien apparaîtra ici">
+</div>
+
+</div>
+
+<p class="small-note">
+<strong>Important :</strong> le lien devient réellement partageable lorsque le fichier <strong>index.html</strong> est publié sur Internet.
+Si vous testez encore le fichier directement depuis votre ordinateur, Chrome affichera une adresse locale qui ne fonctionnera pas sur le téléphone du responsable.
+</p>
+
+<div class="actions">
+<button class="success" type="button" onclick="copierLienDepuisPartage()">📋 COPIER LE LIEN</button>
+<button class="success" type="button" onclick="partagerLienDepuisPartage()">📤 PARTAGER LE LIEN</button>
+<button type="button" onclick="ouvrirLienDepuisPartage()">🌐 OUVRIR LE FORMULAIRE</button>
+<button class="secondary" type="button" onclick="retourAccueil()">↩ RETOUR</button>
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total organisations</h3>
+<div class="number" id="total">0</div>
+</div>
+
+<div class="card">
+<h3>ASBL</h3>
+<div class="number" id="totalASBL">0</div>
+</div>
+
+<div class="card">
+<h3>Fondations</h3>
+<div class="number" id="totalFondations">0</div>
+</div>
+
+<div class="card">
+<h3>Mouvements</h3>
+<div class="number" id="totalMouvements">0</div>
+</div>
+
+<div class="card">
+<h3>Responsables</h3>
+<div class="number" id="totalResponsables">0</div>
+</div>
+
+<div class="card">
+<h3>En attente</h3>
+<div class="number" id="totalAttente">0</div>
+</div>
+
+<div class="card">
+<h3>Validés</h3>
+<div class="number" id="totalValides">0</div>
+</div>
+
+</div>
+
+
+<!-- COMMISSION -->
+
+<div id="commissionSection" class="section commission hidden">
+
+<h2>👥 COMMISSION D'IDENTIFICATION</h2>
+
+<div class="notice">
+<strong>Composition :</strong> Président + 5 membres = 6 personnes.
+</div>
+
+<div class="grid">
+
+<div class="member-box">
+<label>Président de la Commission</label>
+<input id="president">
+</div>
+
+<div class="member-box">
+<label>Téléphone Président</label>
+<input id="telPresident" type="tel">
+</div>
+
+<div class="member-box">
+<label>Membre 1</label>
+<input id="membre1">
+</div>
+
+<div class="member-box">
+<label>Téléphone Membre 1</label>
+<input id="telMembre1" type="tel">
+</div>
+
+<div class="member-box">
+<label>Membre 2</label>
+<input id="membre2">
+</div>
+
+<div class="member-box">
+<label>Téléphone Membre 2</label>
+<input id="telMembre2" type="tel">
+</div>
+
+<div class="member-box">
+<label>Membre 3</label>
+<input id="membre3">
+</div>
+
+<div class="member-box">
+<label>Téléphone Membre 3</label>
+<input id="telMembre3" type="tel">
+</div>
+
+<div class="member-box">
+<label>Membre 4</label>
+<input id="membre4">
+</div>
+
+<div class="member-box">
+<label>Téléphone Membre 4</label>
+<input id="telMembre4" type="tel">
+</div>
+
+<div class="member-box">
+<label>Membre 5</label>
+<input id="membre5">
+</div>
+
+<div class="member-box">
+<label>Téléphone Membre 5</label>
+<input id="telMembre5" type="tel">
+</div>
+
+</div>
+
+<br>
+
+<button class="success" onclick="enregistrerCommission()">
+💾 ENREGISTRER LA COMMISSION
+</button>
+
+<button class="secondary" onclick="retourAccueil()">
+↩ RETOUR
+</button>
+
+</div>
+
+
+<!-- FORMULAIRE ORGANISATION -->
+
+<div id="formSection" class="section hidden">
+
+<h2>📝 FICHE D'IDENTIFICATION</h2>
+
+<form id="form">
+
+<div class="grid">
+
+<div>
+<label>N° dossier</label>
+<input id="numero" readonly>
+</div>
+
+<div>
+<label>Date d'identification</label>
+<input id="date" type="date" required>
+</div>
+
+<div class="full">
+
+<label>Type d'organisation *</label>
+
+<div class="type-box">
+
+<label>
+<input type="radio" name="type" value="ASBL" required>
+ASBL
+</label>
+
+<label>
+<input type="radio" name="type" value="Fondation">
+Fondation
+</label>
+
+<label>
+<input type="radio" name="type" value="Mouvement">
+Mouvement
+</label>
+
+</div>
+
+</div>
+
+<div>
+<label>Nom officiel *</label>
+<input id="nom" required>
+</div>
+
+<div>
+<label>Sigle</label>
+<input id="sigle">
+</div>
+
+<div>
+<label>Date de création</label>
+<input id="creation" type="date">
+</div>
+
+<div>
+<label>Nom du responsable *</label>
+<input id="responsable" required>
+</div>
+
+<div>
+<label>Postnom</label>
+<input id="postnom">
+</div>
+
+<div>
+<label>Prénom</label>
+<input id="prenom">
+</div>
+
+<div>
+<label>Téléphone *</label>
+<input id="telephone" required>
+</div>
+
+<div>
+<label>Email</label>
+<input id="email" type="email">
+</div>
+
+<div>
+<label>Commune *</label>
+<input id="commune" required>
+</div>
+
+<div>
+<label>Quartier</label>
+<input id="quartier">
+</div>
+
+<div>
+<label>Avenue</label>
+<input id="avenue">
+</div>
+
+<div class="full">
+
+<label>Domaines d'intervention</label>
+
+<div class="domaines">
+
+<label><input type="checkbox" name="domaine" value="Droits humains"> Droits humains</label>
+<label><input type="checkbox" name="domaine" value="Santé"> Santé</label>
+<label><input type="checkbox" name="domaine" value="Éducation"> Éducation</label>
+<label><input type="checkbox" name="domaine" value="Jeunesse"> Jeunesse</label>
+<label><input type="checkbox" name="domaine" value="Femmes et Genre"> Femmes et Genre</label>
+<label><input type="checkbox" name="domaine" value="Environnement"> Environnement</label>
+<label><input type="checkbox" name="domaine" value="Agriculture"> Agriculture</label>
+<label><input type="checkbox" name="domaine" value="Entrepreneuriat"> Entrepreneuriat</label>
+<label><input type="checkbox" name="domaine" value="Sport"> Sport</label>
+<label><input type="checkbox" name="domaine" value="Culture et Arts"> Culture et Arts</label>
+<label><input type="checkbox" name="domaine" value="Action humanitaire"> Action humanitaire</label>
+<label><input type="checkbox" name="domaine" value="Développement communautaire"> Développement communautaire</label>
+<label><input type="checkbox" name="domaine" value="Gouvernance"> Gouvernance</label>
+<label><input type="checkbox" name="domaine" value="Formation professionnelle"> Formation professionnelle</label>
+<label><input type="checkbox" name="domaine" value="Protection de l'enfance"> Protection de l'enfance</label>
+<label><input type="checkbox" name="domaine" value="Autres"> Autres</label>
+
+</div>
+</div>
+
+<div class="full">
+
+<label>Activités principales</label>
+<textarea id="activites"></textarea>
+
+</div>
+
+<div>
+
+<label>Statut du dossier</label>
+
+<select id="statut">
+<option value="En attente">En attente</option>
+<option value="En vérification">En vérification</option>
+<option value="Validé">Validé</option>
+<option value="Rejeté">Rejeté</option>
+</select>
+
+</div>
+
+<div class="full">
+
+<label>Observations de la commission</label>
+<textarea id="observations"></textarea>
+
+</div>
+
+</div>
+
+<br>
+
+<button class="success" type="submit">
+💾 ENREGISTRER LE DOSSIER
+</button>
+
+<button type="button" class="secondary" onclick="afficherRegistre()">
+✖ ANNULER
+</button>
+
+</form>
+
+</div>
+
+
+<!-- REGISTRE RESPONSABLES -->
+
+<div id="responsablesSection" class="section hidden">
+
+<h2>👤 REGISTRE DES RESPONSABLES</h2>
+
+<div class="actions">
+
+<button onclick="nouveauResponsable()">
+➕ Nouveau responsable
+</button>
+
+<button onclick="afficherInscriptionPublique()" class="success">
+🌐 Ouvrir inscription
+</button>
+
+<button onclick="afficherLienPartage()">
+🔗 Lien à partager
+</button>
+
+<button class="secondary" onclick="retourAccueil()">
+↩ Retour
+</button>
+
+</div>
+
+<br>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>N° RESPONSABLE</th>
+<th>NOM COMPLET</th>
+<th>TÉLÉPHONE</th>
+<th>FONCTION</th>
+<th>ORGANISATION</th>
+<th>COMMUNE</th>
+<th>STATUT</th>
+<th>ACTIONS</th>
+</tr>
+
+</thead>
+
+<tbody id="listeResponsables"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- FORMULAIRE RESPONSABLE -->
+
+<div id="formResponsableSection" class="section hidden">
+
+<h2>👤 FICHE DU RESPONSABLE</h2>
+
+<form id="formResponsable">
+
+<div class="grid">
+
+<div>
+<label>N° responsable</label>
+<input id="numeroResponsable" readonly>
+</div>
+
+<div>
+<label>Date d'enregistrement</label>
+<input id="dateResponsable" type="date" required>
+</div>
+
+<div>
+<label>Nom *</label>
+<input id="nomResponsable" required>
+</div>
+
+<div>
+<label>Postnom *</label>
+<input id="postnomResponsable" required>
+</div>
+
+<div>
+<label>Prénom *</label>
+<input id="prenomResponsable" required>
+</div>
+
+<div>
+<label>Sexe *</label>
+
+<select id="sexeResponsable" required>
+<option value="">Sélectionner</option>
+<option value="Masculin">Masculin</option>
+<option value="Féminin">Féminin</option>
+</select>
+
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input id="naissanceResponsable" type="date">
+</div>
+
+<div>
+<label>Téléphone *</label>
+<input id="telephoneResponsable" type="tel" required>
+</div>
+
+<div>
+<label>Email</label>
+<input id="emailResponsable" type="email">
+</div>
+
+<div>
+<label>Commune *</label>
+<input id="communeResponsable" required>
+</div>
+
+<div class="full">
+<label>Adresse</label>
+<input id="adresseResponsable">
+</div>
+
+<div>
+<label>Fonction dans la structure *</label>
+<input id="fonctionResponsable" required>
+</div>
+
+<div>
+<label>Organisation *</label>
+<select id="organisationResponsable" required>
+<option value="">-- Sélectionner l'organisation --</option>
+</select>
+</div>
+
+<div>
+<label>Date de prise de fonction</label>
+<input id="priseFonction" type="date">
+</div>
+
+<div>
+<label>Statut</label>
+
+<select id="statutResponsable">
+<option value="Actif">Actif</option>
+<option value="En attente">En attente</option>
+<option value="Suspendu">Suspendu</option>
+</select>
+
+</div>
+
+<div class="full">
+<label>Observation</label>
+<textarea id="observationResponsable"></textarea>
+</div>
+
+</div>
+
+<br>
+
+<button class="success" type="submit">
+💾 ENREGISTRER LE RESPONSABLE
+</button>
+
+<button type="button" class="secondary" onclick="afficherResponsables()">
+✖ ANNULER
+</button>
+
+</form>
+
+</div>
+
+
+<!-- INSCRIPTION PUBLIQUE -->
+
+<div id="inscriptionPublique" class="section public-box hidden">
+
+<h2 class="public-title">
+🌐 FORMULAIRE OFFICIEL D'ENREGISTREMENT DES RESPONSABLES
+</h2>
+
+<p style="text-align:center">
+<strong>UNION SACRÉE DE LA NATION – LUBUMBASHI</strong>
+</p>
+
+<p style="text-align:center">
+Veuillez remplir correctement toutes les informations demandées.
+</p>
+
+<div class="notice">
+<strong>Important :</strong>
+Après l'envoi, votre inscription sera enregistrée comme
+<strong>En attente</strong> jusqu'à sa validation.
+</div>
+
+<form id="formPublicResponsable">
+
+<div class="grid">
+
+<div>
+<label>Nom *</label>
+<input id="publicNom" required>
+</div>
+
+<div>
+<label>Postnom *</label>
+<input id="publicPostnom" required>
+</div>
+
+<div>
+<label>Prénom *</label>
+<input id="publicPrenom" required>
+</div>
+
+<div>
+<label>Sexe *</label>
+
+<select id="publicSexe" required>
+<option value="">Sélectionner</option>
+<option value="Masculin">Masculin</option>
+<option value="Féminin">Féminin</option>
+</select>
+
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input id="publicNaissance" type="date">
+</div>
+
+<div>
+<label>Téléphone *</label>
+<input id="publicTelephone" type="tel" required>
+</div>
+
+<div>
+<label>Email</label>
+<input id="publicEmail" type="email">
+</div>
+
+<div>
+<label>Commune *</label>
+<input id="publicCommune" required>
+</div>
+
+<div class="full">
+<label>Adresse</label>
+<input id="publicAdresse">
+</div>
+
+<div>
+<label>Fonction dans la structure *</label>
+<input id="publicFonction" required>
+</div>
+
+<div id="publicOrganisationSelectBox">
+<label>Organisation *</label>
+
+<select id="publicOrganisation" required>
+<option value="">-- Sélectionner l'organisation --</option>
+</select>
+
+</div>
+
+<div id="publicOrganisationFixe" class="full fixed-org hidden">
+<label>Organisation liée au lien</label>
+<input id="publicOrganisationNom" readonly>
+<input id="publicNumeroOrganisation" type="hidden">
+</div>
+
+<div>
+<label>Date de prise de fonction</label>
+<input id="publicPriseFonction" type="date">
+</div>
+
+<div class="full">
+
+<label>Observation</label>
+
+<textarea id="publicObservation"></textarea>
+
+</div>
+
+</div>
+
+<br>
+
+<button class="success" type="submit">
+📨 ENVOYER MON ENREGISTREMENT
+</button>
+
+<button type="button" onclick="afficherLienPartage()">
+🔗 COPIER UN LIEN À PARTAGER
+</button>
+
+<button type="button" class="secondary" onclick="retourAccueil()">
+↩ RETOUR
+</button>
+
+</form>
+
+</div>
+
+
+<!-- REGISTRE ORGANISATIONS -->
+
+<div id="registre" class="section">
+
+<h2>📂 REGISTRE DES ORGANISATIONS</h2>
+
+<br>
+
+<input
+id="rechercheOrganisation"
+type="text"
+placeholder="🔍 Rechercher une organisation..."
+onkeyup="rechercherOrganisation()"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>N° DOSSIER</th>
+<th>TYPE</th>
+<th>ORGANISATION</th>
+<th>RESPONSABLE</th>
+<th>TÉLÉPHONE</th>
+<th>COMMUNE</th>
+<th>DOMAINES</th>
+<th>STATUT</th>
+<th>ACTIONS</th>
+</tr>
+
+</thead>
+
+<tbody id="liste"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- DETAILS -->
+
+<div id="detailsSection" class="section hidden">
+
+<h2>📄 DÉTAILS DE L'ORGANISATION</h2>
+
+<div id="details" class="details"></div>
+
+<br>
+
+<button class="secondary" onclick="afficherRegistre()">
+↩ RETOUR AU REGISTRE
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+UNION SACRÉE DE LA NATION<br>
+SECRÉTARIAT EXÉCUTIF URBAIN – LUBUMBASHI<br>
+SECRÉTARIAT EXÉCUTIF ADJOINT EN CHARGE DES ASBL,
+FONDATIONS ET MOUVEMENTS
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   LIEN GOOGLE APPS SCRIPT
+===================================================== */
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxOkBhOR3jpMI65iZlb8AjPUyDEYs9lkLASl1PV2l3uww9uB44L0uZCUU-FWzQjTTBdoQ/exec";
+
+
+/* =====================================================
+   DONNÉES LOCALES
+===================================================== */
+
+let organisations =
+JSON.parse(localStorage.getItem("organisationsUSN")) || [];
+
+let responsables =
+JSON.parse(localStorage.getItem("responsablesUSN")) || [];
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function dateAujourdhui(){
+
+    return new Date()
+    .toISOString()
+    .split("T")[0];
+
+}
+
+
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+function enregistrerCommission(){
+
+    const commission={
+
+        president:document.getElementById("president").value,
+
+        telPresident:
+        document.getElementById("telPresident").value,
+
+        membre1:
+        document.getElementById("membre1").value,
+
+        telMembre1:
+        document.getElementById("telMembre1").value,
+
+        membre2:
+        document.getElementById("membre2").value,
+
+        telMembre2:
+        document.getElementById("telMembre2").value,
+
+        membre3:
+        document.getElementById("membre3").value,
+
+        telMembre3:
+        document.getElementById("telMembre3").value,
+
+        membre4:
+        document.getElementById("membre4").value,
+
+        telMembre4:
+        document.getElementById("telMembre4").value,
+
+        membre5:
+        document.getElementById("membre5").value,
+
+        telMembre5:
+        document.getElementById("telMembre5").value
+
+    };
+
+    localStorage.setItem(
+        "commissionUSNLubumbashi",
+        JSON.stringify(commission)
+    );
+
+    alert(
+        "La Commission a été enregistrée avec succès."
+    );
+
+}
+
+
+function chargerCommission(){
+
+    const c=JSON.parse(
+        localStorage.getItem("commissionUSNLubumbashi")
+    );
+
+    if(!c)return;
+
+    document.getElementById("president").value=c.president||"";
+    document.getElementById("telPresident").value=c.telPresident||"";
+    document.getElementById("membre1").value=c.membre1||"";
+    document.getElementById("telMembre1").value=c.telMembre1||"";
+    document.getElementById("membre2").value=c.membre2||"";
+    document.getElementById("telMembre2").value=c.telMembre2||"";
+    document.getElementById("membre3").value=c.membre3||"";
+    document.getElementById("telMembre3").value=c.telMembre3||"";
+    document.getElementById("membre4").value=c.membre4||"";
+    document.getElementById("telMembre4").value=c.telMembre4||"";
+    document.getElementById("membre5").value=c.membre5||"";
+    document.getElementById("telMembre5").value=c.telMembre5||"";
+
+}
+
+
+/* =====================================================
+   NUMÉROS
+===================================================== */
+
+function prochainNumero(){
+
+    let max=0;
+
+    organisations.forEach(org=>{
+
+        const m=(org.numero||"").match(/(\d{4})$/);
+
+        if(m){
+            max=Math.max(max,parseInt(m[1]));
+        }
+
+    });
+
+    return "USN-LUB-ASBL-"+
+        String(max+1).padStart(4,"0");
+
+}
+
+
+function numeroResponsablePublicUnique(){
+
+    const date=new Date();
+
+    const annee=date.getFullYear();
+    const unique=String(Date.now()).slice(-6);
+
+    return "USN-LUB-RESP-"+annee+"-"+unique;
+
+}
+
+
+function prochainNumeroResponsable(){
+
+    let max=0;
+
+    responsables.forEach(r=>{
+
+        const m=(r.numero||"").match(/(\d{4})$/);
+
+        if(m){
+            max=Math.max(max,parseInt(m[1]));
+        }
+
+    });
+
+    return "USN-LUB-RESP-"+
+        String(max+1).padStart(4,"0");
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function cacherTout(){
+
+    [
+        "formSection",
+        "commissionSection",
+        "responsablesSection",
+        "formResponsableSection",
+        "inscriptionPublique",
+        "detailsSection",
+        "partageSection"
+    ].forEach(id=>{
+
+        document.getElementById(id)
+        .classList.add("hidden");
+
+    });
+
+}
+
+
+function retourAccueil(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.remove("hidden");
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   NOUVEAU DOSSIER
+===================================================== */
+
+function nouveauDossier(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById("formSection")
+    .classList.remove("hidden");
+
+    document.getElementById("numero").value=
+        prochainNumero();
+
+    document.getElementById("date").value=
+        dateAujourdhui();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   REGISTRE
+===================================================== */
+
+function afficherRegistre(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.remove("hidden");
+
+    afficherListe();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   ENREGISTRER ORGANISATION
+===================================================== */
+
+document.getElementById("form")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const domaines=[
+        ...document.querySelectorAll(
+            'input[name="domaine"]:checked'
+        )
+    ].map(x=>x.value);
+
+    const radio=document.querySelector(
+        'input[name="type"]:checked'
+    );
+
+    const organisation={
+
+        numero:document.getElementById("numero").value,
+
+        date:document.getElementById("date").value,
+
+        type:radio ? radio.value : "",
+
+        nom:document.getElementById("nom").value.trim(),
+
+        sigle:document.getElementById("sigle").value.trim(),
+
+        creation:document.getElementById("creation").value,
+
+        responsable:
+        document.getElementById("responsable").value.trim(),
+
+        postnom:
+        document.getElementById("postnom").value.trim(),
+
+        prenom:
+        document.getElementById("prenom").value.trim(),
+
+        telephone:
+        document.getElementById("telephone").value.trim(),
+
+        email:
+        document.getElementById("email").value.trim(),
+
+        commune:
+        document.getElementById("commune").value.trim(),
+
+        quartier:
+        document.getElementById("quartier").value.trim(),
+
+        avenue:
+        document.getElementById("avenue").value.trim(),
+
+        domaines:domaines,
+
+        activites:
+        document.getElementById("activites").value.trim(),
+
+        statut:
+        document.getElementById("statut").value,
+
+        observations:
+        document.getElementById("observations").value.trim()
+
+    };
+
+    organisations.push(organisation);
+
+    localStorage.setItem(
+        "organisationsUSN",
+        JSON.stringify(organisations)
+    );
+
+    alert(
+        "Le dossier "+
+        organisation.numero+
+        " a été enregistré avec succès."
+    );
+
+    this.reset();
+
+    afficherRegistre();
+
+    actualiserTableau();
+
+});
+
+
+/* =====================================================
+   LISTE ORGANISATIONS
+===================================================== */
+
+function afficherListe(){
+
+    const tbody=document.getElementById("liste");
+
+    tbody.innerHTML="";
+
+    organisations.forEach((org,index)=>{
+
+        let classe="pending";
+
+        if(org.statut==="Validé")
+            classe="valid";
+
+        if(org.statut==="Rejeté")
+            classe="rejected";
+
+        const tr=document.createElement("tr");
+
+        tr.innerHTML=`
+
+<td>${org.numero}</td>
+
+<td>${org.type}</td>
+
+<td>
+<strong>${org.nom}</strong>
+${org.sigle ? "<br>"+org.sigle : ""}
+</td>
+
+<td>
+${org.responsable||""}
+${org.postnom ? " "+org.postnom : ""}
+${org.prenom ? " "+org.prenom : ""}
+</td>
+
+<td>${org.telephone||""}</td>
+
+<td>${org.commune||""}</td>
+
+<td>
+${org.domaines?.length
+?org.domaines.join(", ")
+:"Non renseigné"}
+</td>
+
+<td>
+<span class="status ${classe}">
+${org.statut}
+</span>
+</td>
+
+<td>
+
+<button onclick="voir(${index})">👁️</button>
+
+<button onclick="modifierOrganisation(${index})">
+✏️
+</button>
+
+<button class="success"
+onclick="validerOrganisation(${index})">
+✅
+</button>
+
+<button class="danger"
+onclick="supprimer(${index})">
+🗑️
+</button>
+
+<button class="success"
+onclick="certificat(${index})">
+🪪
+</button>
+
+<button onclick="copierLienResponsable(${index})" title="Copier le lien à partager">
+🔗
+</button>
+
+</td>
+
+`;
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* =====================================================
+   LIENS À PARTAGER
+===================================================== */
+
+function construireLienResponsable(index){
+
+    const o=organisations[index];
+
+    if(!o)return "";
+
+    /*
+       On conserve exactement la page actuelle et on ajoute
+       seulement les paramètres nécessaires au responsable.
+       Cela fonctionne aussi bien sur un site publié que pour
+       un test local du fichier index.html.
+    */
+    const url=new URL(window.location.href);
+
+    url.search="";
+    url.hash="";
+
+    url.searchParams.set("inscription","1");
+    url.searchParams.set("organisation",o.nom||"");
+    url.searchParams.set("numeroOrganisation",o.numero||"");
+
+    return url.href;
+
+}
+
+
+async function copierTexte(texte){
+
+    if(!texte)return false;
+
+    /* Méthode moderne */
+    try{
+        if(navigator.clipboard && window.isSecureContext){
+            await navigator.clipboard.writeText(texte);
+            return true;
+        }
+    }catch(e){}
+
+    /* Méthode compatible avec les anciens navigateurs et file:// */
+    try{
+        const zone=document.createElement("textarea");
+        zone.value=texte;
+        zone.setAttribute("readonly","");
+        zone.style.position="fixed";
+        zone.style.left="-9999px";
+        zone.style.top="0";
+        zone.style.opacity="0";
+        document.body.appendChild(zone);
+        zone.focus();
+        zone.select();
+        zone.setSelectionRange(0,zone.value.length);
+        const ok=document.execCommand("copy");
+        zone.remove();
+        if(ok)return true;
+    }catch(e){}
+
+    return false;
+
+}
+
+
+function demanderCopieManuelle(lien){
+
+    /* Dernier secours : l'utilisateur peut copier directement. */
+    window.prompt(
+        "La copie automatique est bloquée par le navigateur.\n\nCopiez ce lien puis envoyez-le au responsable :",
+        lien
+    );
+
+}
+
+
+async function copierLienResponsable(index){
+
+    const lien=construireLienResponsable(index);
+    const o=organisations[index];
+
+    if(!lien){
+        alert("Veuillez d'abord sélectionner une organisation.");
+        return;
+    }
+
+    const ok=await copierTexte(lien);
+
+    if(ok){
+        alert(
+            "✅ LIEN COPIÉ !\n\n"+
+            "Organisation : "+(o?.nom||"")+"\n\n"+
+            "Vous pouvez maintenant le coller dans WhatsApp, SMS ou email."
+        );
+    }else{
+        demanderCopieManuelle(lien);
+    }
+
+}
+
+
+async function partagerLienParResponsable(index){
+
+    const r=responsables[index];
+
+    if(!r){
+        alert("Responsable introuvable.");
+        return;
+    }
+
+    let oi=-1;
+
+    if(r.numeroOrganisation){
+        oi=organisations.findIndex(
+            o=>o.numero===r.numeroOrganisation
+        );
+    }
+
+    let lien="";
+
+    if(oi>=0){
+        lien=construireLienResponsable(oi);
+    }else{
+        const url=new URL(window.location.href);
+        url.search="";
+        url.hash="";
+        url.searchParams.set("inscription","1");
+        url.searchParams.set("organisation",r.organisation||"");
+        url.searchParams.set("numeroOrganisation",r.numeroOrganisation||"");
+        lien=url.href;
+    }
+
+    if(navigator.share){
+        try{
+            await navigator.share({
+                title:"Inscription responsable — USN Lubumbashi",
+                text:
+                    "Veuillez utiliser ce lien pour remplir votre fiche de responsable :\n"+
+                    (r.organisation||""),
+                url:lien
+            });
+            return;
+        }catch(e){
+            /* Annulation du partage ou partage non disponible : copie */
+            if(e && e.name==="AbortError")return;
+        }
+    }
+
+    const ok=await copierTexte(lien);
+
+    if(ok){
+        alert(
+            "📤 LE LIEN EST PRÊT À ÊTRE PARTAGÉ.\n\n"+
+            "Le navigateur ne propose pas le partage direct.\n"+
+            "Le lien a donc été copié : collez-le dans WhatsApp ou SMS."
+        );
+    }else{
+        demanderCopieManuelle(lien);
+    }
+
+}
+
+
+function chargerOrganisationsPartage(){
+
+    const select=document.getElementById("organisationPartage");
+
+    if(!select)return;
+
+    select.innerHTML=
+        `<option value="">-- Sélectionner l'organisation --</option>`;
+
+    organisations.forEach((org,index)=>{
+
+        const option=document.createElement("option");
+        option.value=index;
+        option.textContent=org.numero+" - "+org.nom;
+        select.appendChild(option);
+
+    });
+
+}
+
+
+function mettreAJourLienPartage(){
+
+    const select=document.getElementById("organisationPartage");
+    const champ=document.getElementById("lienPartage");
+
+    if(!select||!champ)return;
+
+    champ.value=select.value!==""
+        ?construireLienResponsable(parseInt(select.value,10))
+        :"";
+
+}
+
+
+function afficherLienPartage(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById("partageSection")
+    .classList.remove("hidden");
+
+    chargerOrganisationsPartage();
+    mettreAJourLienPartage();
+
+    window.scrollTo(0,0);
+
+}
+
+
+async function copierLienDepuisPartage(){
+
+    const lien=document.getElementById("lienPartage")?.value||"";
+
+    if(!lien){
+        alert("Veuillez d'abord sélectionner une organisation.");
+        return;
+    }
+
+    const ok=await copierTexte(lien);
+
+    if(ok){
+        alert("✅ LIEN COPIÉ !\n\nVous pouvez maintenant le coller dans WhatsApp, SMS ou email.");
+    }else{
+        demanderCopieManuelle(lien);
+    }
+
+}
+
+
+async function partagerLienDepuisPartage(){
+
+    const select=document.getElementById("organisationPartage");
+    const lien=document.getElementById("lienPartage")?.value||"";
+
+    if(!select || select.value==="" || !lien){
+        alert("Veuillez d'abord sélectionner une organisation.");
+        return;
+    }
+
+    const org=organisations[parseInt(select.value,10)];
+
+    /*
+       Le partage natif de Chrome peut provoquer une erreur lorsque
+       index.html est encore ouvert en local (file://).
+       On ne l'appelle donc que sur une vraie page sécurisée.
+       Sinon, on utilise le système de copie déjà fonctionnel.
+    */
+    const partageNatifDisponible =
+        typeof navigator !== "undefined" &&
+        typeof navigator.share === "function" &&
+        window.isSecureContext &&
+        location.protocol !== "file:";
+
+    if(partageNatifDisponible){
+        try{
+            await navigator.share({
+                title:"Inscription responsable — USN Lubumbashi",
+                text:
+                    "Fiche d'inscription du responsable de "+
+                    (org?.nom||"l'organisation"),
+                url:lien
+            });
+            return;
+        }catch(e){
+            /* Annulation ou refus du partage : on passe au secours. */
+            if(e && e.name==="AbortError")return;
+        }
+    }
+
+    const ok=await copierTexte(lien);
+
+    if(ok){
+        alert(
+            "📤 LIEN PRÊT À ÊTRE PARTAGÉ !\n\n"+
+            "Le partage direct n'est pas disponible dans cette ouverture du fichier.\n\n"+
+            "Le lien a été copié. Collez-le maintenant dans WhatsApp, SMS ou email."
+        );
+    }else{
+        demanderCopieManuelle(lien);
+    }
+
+}
+
+
+function ouvrirLienDepuisPartage(){
+
+    const lien=document.getElementById("lienPartage")?.value||"";
+
+    if(!lien){
+        alert("Veuillez d'abord sélectionner une organisation.");
+        return;
+    }
+
+    /*
+       Ouverture dans un nouvel onglet. Si Chrome bloque la fenêtre,
+       on ouvre le lien dans l'onglet courant afin que le bouton
+       fonctionne quand même.
+    */
+    const fenetre=window.open(lien,"_blank","noopener,noreferrer");
+
+    if(!fenetre){
+        window.location.href=lien;
+    }
+
+}
+
+
+function appliquerOrganisationLien(){
+
+    const params=new URLSearchParams(window.location.search);
+
+    const mode=params.get("inscription");
+    const nom=params.get("organisation")||"";
+    const numero=params.get("numeroOrganisation")||"";
+
+    const selectBox=document.getElementById("publicOrganisationSelectBox");
+    const select=document.getElementById("publicOrganisation");
+    const fixe=document.getElementById("publicOrganisationFixe");
+    const nomFixe=document.getElementById("publicOrganisationNom");
+    const numeroFixe=document.getElementById("publicNumeroOrganisation");
+
+    if(!selectBox||!select||!fixe)return;
+
+    if(mode==="1" && (nom||numero)){
+
+        selectBox.classList.add("hidden");
+        select.required=false;
+
+        fixe.classList.remove("hidden");
+        nomFixe.value=
+            (numero?numero+" - ":"")+nom;
+        numeroFixe.value=numero;
+
+    }else{
+
+        selectBox.classList.remove("hidden");
+        select.required=true;
+
+        fixe.classList.add("hidden");
+        nomFixe.value="";
+        numeroFixe.value="";
+
+    }
+
+}
+
+
+/* =====================================================
+   RECHERCHE
+===================================================== */
+
+function rechercherOrganisation(){
+
+    const recherche=
+        document.getElementById(
+            "rechercheOrganisation"
+        ).value.toLowerCase();
+
+    const lignes=
+        document.querySelectorAll("#liste tr");
+
+    lignes.forEach(ligne=>{
+
+        ligne.style.display=
+            ligne.innerText
+            .toLowerCase()
+            .includes(recherche)
+            ?""
+            :"none";
+
+    });
+
+}
+
+
+/* =====================================================
+   VOIR ORGANISATION
+===================================================== */
+
+function voir(index){
+
+    const o=organisations[index];
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById("detailsSection")
+    .classList.remove("hidden");
+
+    document.getElementById("details").innerHTML=`
+
+<div class="detail">
+<strong>N° dossier</strong>
+${o.numero}
+</div>
+
+<div class="detail">
+<strong>Type</strong>
+${o.type}
+</div>
+
+<div class="detail">
+<strong>Organisation</strong>
+${o.nom}
+</div>
+
+<div class="detail">
+<strong>Sigle</strong>
+${o.sigle||"Non renseigné"}
+</div>
+
+<div class="detail">
+<strong>Responsable</strong>
+${o.responsable||""}
+${o.postnom||""}
+${o.prenom||""}
+</div>
+
+<div class="detail">
+<strong>Téléphone</strong>
+${o.telephone}
+</div>
+
+<div class="detail">
+<strong>Email</strong>
+${o.email||"Non renseigné"}
+</div>
+
+<div class="detail">
+<strong>Commune</strong>
+${o.commune}
+</div>
+
+<div class="detail">
+<strong>Quartier</strong>
+${o.quartier||"Non renseigné"}
+</div>
+
+<div class="detail">
+<strong>Avenue</strong>
+${o.avenue||"Non renseignée"}
+</div>
+
+<div class="detail">
+<strong>Domaines</strong>
+${o.domaines?.length
+?o.domaines.join(", ")
+:"Non renseigné"}
+</div>
+
+<div class="detail">
+<strong>Date d'identification</strong>
+${o.date}
+</div>
+
+<div class="detail">
+<strong>Statut</strong>
+${o.statut}
+</div>
+
+<div class="detail full">
+<strong>Activités</strong>
+${o.activites||"Non renseignées"}
+</div>
+
+<div class="detail full">
+<strong>Observations</strong>
+${o.observations||"Aucune observation"}
+</div>
+
+`;
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   MODIFIER ORGANISATION
+===================================================== */
+
+function modifierOrganisation(index){
+
+    const o=organisations[index];
+
+    nouveauDossier();
+
+    document.getElementById("numero").value=o.numero;
+    document.getElementById("date").value=o.date||"";
+
+    document.querySelectorAll(
+        'input[name="type"]'
+    ).forEach(r=>{
+        r.checked=r.value===o.type;
+    });
+
+    document.getElementById("nom").value=o.nom||"";
+    document.getElementById("sigle").value=o.sigle||"";
+    document.getElementById("creation").value=o.creation||"";
+    document.getElementById("responsable").value=o.responsable||"";
+    document.getElementById("postnom").value=o.postnom||"";
+    document.getElementById("prenom").value=o.prenom||"";
+    document.getElementById("telephone").value=o.telephone||"";
+    document.getElementById("email").value=o.email||"";
+    document.getElementById("commune").value=o.commune||"";
+    document.getElementById("quartier").value=o.quartier||"";
+    document.getElementById("avenue").value=o.avenue||"";
+    document.getElementById("activites").value=o.activites||"";
+    document.getElementById("statut").value=o.statut||"En attente";
+    document.getElementById("observations").value=o.observations||"";
+
+    document.querySelectorAll(
+        'input[name="domaine"]'
+    ).forEach(c=>{
+        c.checked=(o.domaines||[]).includes(c.value);
+    });
+
+    const form=document.getElementById("form");
+
+    form.onsubmit=function(e){
+
+        e.preventDefault();
+
+        const radio=document.querySelector(
+            'input[name="type"]:checked'
+        );
+
+        o.date=document.getElementById("date").value;
+        o.type=radio?radio.value:"";
+        o.nom=document.getElementById("nom").value.trim();
+        o.sigle=document.getElementById("sigle").value.trim();
+        o.creation=document.getElementById("creation").value;
+        o.responsable=document.getElementById("responsable").value.trim();
+        o.postnom=document.getElementById("postnom").value.trim();
+        o.prenom=document.getElementById("prenom").value.trim();
+        o.telephone=document.getElementById("telephone").value.trim();
+        o.email=document.getElementById("email").value.trim();
+        o.commune=document.getElementById("commune").value.trim();
+        o.quartier=document.getElementById("quartier").value.trim();
+        o.avenue=document.getElementById("avenue").value.trim();
+
+        o.domaines=[
+            ...document.querySelectorAll(
+                'input[name="domaine"]:checked'
+            )
+        ].map(x=>x.value);
+
+        o.activites=
+            document.getElementById("activites").value.trim();
+
+        o.statut=
+            document.getElementById("statut").value;
+
+        o.observations=
+            document.getElementById("observations").value.trim();
+
+        localStorage.setItem(
+            "organisationsUSN",
+            JSON.stringify(organisations)
+        );
+
+        form.onsubmit=null;
+        form.reset();
+
+        alert("Dossier modifié avec succès.");
+
+        afficherRegistre();
+        actualiserTableau();
+
+    };
+
+}
+
+
+/* =====================================================
+   VALIDER ORGANISATION
+===================================================== */
+
+function validerOrganisation(index){
+
+    organisations[index].statut="Validé";
+
+    localStorage.setItem(
+        "organisationsUSN",
+        JSON.stringify(organisations)
+    );
+
+    afficherListe();
+    actualiserTableau();
+
+    alert(
+        "Le dossier "+
+        organisations[index].numero+
+        " est maintenant VALIDÉ."
+    );
+
+}
+
+
+/* =====================================================
+   SUPPRIMER ORGANISATION
+===================================================== */
+
+function supprimer(index){
+
+    if(!confirm(
+        "Voulez-vous supprimer définitivement ce dossier ?"
+    ))return;
+
+    organisations.splice(index,1);
+
+    localStorage.setItem(
+        "organisationsUSN",
+        JSON.stringify(organisations)
+    );
+
+    afficherListe();
+    actualiserTableau();
+
+}
+
+
+/* =====================================================
+   COMMISSION
+===================================================== */
+
+function afficherCommission(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById("commissionSection")
+    .classList.remove("hidden");
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   RESPONSABLES
+===================================================== */
+
+function afficherResponsables(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById("responsablesSection")
+    .classList.remove("hidden");
+
+    afficherListeResponsables();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   CHARGER ORGANISATIONS
+===================================================== */
+
+function chargerOrganisationsResponsable(){
+
+    [
+        document.getElementById(
+            "organisationResponsable"
+        ),
+
+        document.getElementById(
+            "publicOrganisation"
+        )
+
+    ].forEach(select=>{
+
+        if(!select)return;
+
+        select.innerHTML=
+        `<option value="">
+        -- Sélectionner l'organisation --
+        </option>`;
+
+        organisations.forEach((org,index)=>{
+
+            const option=
+                document.createElement("option");
+
+            option.value=index;
+
+            option.textContent=
+                org.numero+" - "+org.nom;
+
+            select.appendChild(option);
+
+        });
+
+    });
+
+}
+
+
+/* =====================================================
+   NOUVEAU RESPONSABLE
+===================================================== */
+
+function nouveauResponsable(){
+
+    cacherTout();
+
+    document.getElementById(
+        "formResponsableSection"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "numeroResponsable"
+    ).value=prochainNumeroResponsable();
+
+    document.getElementById(
+        "dateResponsable"
+    ).value=dateAujourdhui();
+
+    chargerOrganisationsResponsable();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   ENREGISTRER RESPONSABLE ADMIN
+===================================================== */
+
+document.getElementById("formResponsable")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const oi=
+        document.getElementById(
+            "organisationResponsable"
+        ).value;
+
+    const org=
+        oi!==""
+        ?organisations[oi]
+        :null;
+
+    const r={
+
+        numero:
+        document.getElementById(
+            "numeroResponsable"
+        ).value,
+
+        date:
+        document.getElementById(
+            "dateResponsable"
+        ).value,
+
+        nom:
+        document.getElementById(
+            "nomResponsable"
+        ).value.trim(),
+
+        postnom:
+        document.getElementById(
+            "postnomResponsable"
+        ).value.trim(),
+
+        prenom:
+        document.getElementById(
+            "prenomResponsable"
+        ).value.trim(),
+
+        sexe:
+        document.getElementById(
+            "sexeResponsable"
+        ).value,
+
+        naissance:
+        document.getElementById(
+            "naissanceResponsable"
+        ).value,
+
+        telephone:
+        document.getElementById(
+            "telephoneResponsable"
+        ).value.trim(),
+
+        email:
+        document.getElementById(
+            "emailResponsable"
+        ).value.trim(),
+
+        commune:
+        document.getElementById(
+            "communeResponsable"
+        ).value.trim(),
+
+        adresse:
+        document.getElementById(
+            "adresseResponsable"
+        ).value.trim(),
+
+        fonction:
+        document.getElementById(
+            "fonctionResponsable"
+        ).value.trim(),
+
+        organisation:organisationNom,
+
+        numeroOrganisation:organisationNumero,
+
+        priseFonction:
+        document.getElementById(
+            "priseFonction"
+        ).value,
+
+        statut:
+        document.getElementById(
+            "statutResponsable"
+        ).value,
+
+        observation:
+        document.getElementById(
+            "observationResponsable"
+        ).value.trim()
+
+    };
+
+    responsables.push(r);
+
+    localStorage.setItem(
+        "responsablesUSN",
+        JSON.stringify(responsables)
+    );
+
+    alert(
+        "Le responsable "+
+        r.numero+
+        " a été enregistré avec succès."
+    );
+
+    this.reset();
+
+    afficherResponsables();
+
+    actualiserTableau();
+
+});
+
+
+/* =====================================================
+   INSCRIPTION PUBLIQUE
+===================================================== */
+
+function afficherInscriptionPublique(){
+
+    cacherTout();
+
+    document.getElementById("registre")
+    .classList.add("hidden");
+
+    document.getElementById(
+        "inscriptionPublique"
+    ).classList.remove("hidden");
+
+    chargerOrganisationsResponsable();
+    appliquerOrganisationLien();
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =====================================================
+   ENVOI PUBLIC VERS GOOGLE
+===================================================== */
+
+document.getElementById(
+    "formPublicResponsable"
+).addEventListener("submit",async function(e){
+
+    e.preventDefault();
+
+    const bouton=this.querySelector(
+        'button[type="submit"]'
+    );
+
+    bouton.disabled=true;
+
+    bouton.textContent="⏳ ENVOI EN COURS...";
+
+    const oi=
+        document.getElementById(
+            "publicOrganisation"
+        ).value;
+
+    const numeroOrganisationLien=
+        document.getElementById(
+            "publicNumeroOrganisation"
+        ).value.trim();
+
+    const nomOrganisationLien=
+        document.getElementById(
+            "publicOrganisationNom"
+        ).value.trim();
+
+    const org=
+        oi!==""
+        ?organisations[oi]
+        :null;
+
+    const organisationNom=
+        numeroOrganisationLien
+        ?nomOrganisationLien.replace(
+            numeroOrganisationLien+" - ",
+            ""
+        )
+        :(org?org.nom:"");
+
+    const organisationNumero=
+        numeroOrganisationLien
+        ||(org?org.numero:"");
+
+    const r={
+
+        numero:numeroResponsablePublicUnique(),
+
+        date:dateAujourdhui(),
+
+        nom:
+        document.getElementById(
+            "publicNom"
+        ).value.trim(),
+
+        postnom:
+        document.getElementById(
+            "publicPostnom"
+        ).value.trim(),
+
+        prenom:
+        document.getElementById(
+            "publicPrenom"
+        ).value.trim(),
+
+        sexe:
+        document.getElementById(
+            "publicSexe"
+        ).value,
+
+        naissance:
+        document.getElementById(
+            "publicNaissance"
+        ).value,
+
+        telephone:
+        document.getElementById(
+            "publicTelephone"
+        ).value.trim(),
+
+        email:
+        document.getElementById(
+            "publicEmail"
+        ).value.trim(),
+
+        commune:
+        document.getElementById(
+            "publicCommune"
+        ).value.trim(),
+
+        adresse:
+        document.getElementById(
+            "publicAdresse"
+        ).value.trim(),
+
+        fonction:
+        document.getElementById(
+            "publicFonction"
+        ).value.trim(),
+
+        organisation:
+        org?org.nom:"",
+
+        numeroOrganisation:
+        org?org.numero:"",
+
+        priseFonction:
+        document.getElementById(
+            "publicPriseFonction"
+        ).value,
+
+        statut:"En attente",
+
+        observation:
+        document.getElementById(
+            "publicObservation"
+        ).value.trim()
+
+    };
+
+
+    try{
+
+        /*
+        Envoi vers Google Apps Script.
+        */
+
+        const donnees=new URLSearchParams();
+
+        Object.keys(r).forEach(cle=>{
+            donnees.append(cle,r[cle]);
+        });
+
+        await fetch(
+            GOOGLE_SCRIPT_URL,
+            {
+                method:"POST",
+                mode:"no-cors",
+                body:donnees
+            }
+        );
+
+
+        /*
+        On conserve également
+        une copie locale.
+        */
+
+        responsables.push(r);
+
+        localStorage.setItem(
+            "responsablesUSN",
+            JSON.stringify(responsables)
+        );
+
+
+        this.reset();
+
+        actualiserTableau();
+
+
+        alert(
+            "✅ VOTRE ENREGISTREMENT A ÉTÉ ENVOYÉ AVEC SUCCÈS.\n\n"+
+            "Votre numéro de responsable est : "+
+            r.numero+
+            "\n\n"+
+            "Votre dossier est actuellement EN ATTENTE de validation."
+        );
+
+
+    }catch(er){
+
+        alert(
+            "⚠️ Une erreur est survenue pendant l'envoi.\n\n"+
+            "Veuillez vérifier votre connexion Internet."
+        );
+
+    }
+
+
+    bouton.disabled=false;
+
+    bouton.textContent=
+        "📨 ENVOYER MON ENREGISTREMENT";
+
+});
+
+
+/* =====================================================
+   LISTE RESPONSABLES
+===================================================== */
+
+function afficherListeResponsables(){
+
+    const tbody=
+        document.getElementById(
+            "listeResponsables"
+        );
+
+    tbody.innerHTML="";
+
+    responsables.forEach((r,index)=>{
+
+        const classe=
+            r.statut==="Actif"
+            ?"valid"
+            :"pending";
+
+        const tr=document.createElement("tr");
+
+        tr.innerHTML=`
+
+<td>${r.numero}</td>
+
+<td>
+<strong>
+${r.nom} ${r.postnom} ${r.prenom}
+</strong>
+</td>
+
+<td>${r.telephone}</td>
+
+<td>${r.fonction}</td>
+
+<td>${r.organisation||"Non renseignée"}</td>
+
+<td>${r.commune}</td>
+
+<td>
+<span class="status ${classe}">
+${r.statut}
+</span>
+</td>
+
+<td>
+
+<button onclick="voirResponsable(${index})">
+👁️
+</button>
+
+<button onclick="modifierResponsable(${index})">
+✏️
+</button>
+
+<button class="success"
+onclick="activerResponsable(${index})">
+✅
+</button>
+
+<button class="success"
+onclick="carteResponsable(${index})">
+🪪
+</button>
+
+<button onclick="copierLienResponsable(${index})" title="Copier le lien de son organisation">
+📋
+</button>
+
+<button class="success" onclick="partagerLienParResponsable(${index})" title="Partager le lien de son organisation">
+📤
+</button>
+
+<button class="danger"
+onclick="supprimerResponsable(${index})">
+🗑️
+</button>
+
+</td>
+
+`;
+
+        tbody.appendChild(tr);
+
+    });
+
+}
+
+
+/* =====================================================
+   ACTIVER RESPONSABLE
+===================================================== */
+
+function activerResponsable(index){
+
+    responsables[index].statut="Actif";
+
+    localStorage.setItem(
+        "responsablesUSN",
+        JSON.stringify(responsables)
+    );
+
+    afficherListeResponsables();
+
+    actualiserTableau();
+
+    alert(
+        responsables[index].nom+
+        " "+
+        responsables[index].postnom+
+        " est maintenant ACTIF."
+    );
+
+}
+
+
+/* =====================================================
+   VOIR RESPONSABLE
+===================================================== */
+
+function voirResponsable(index){
+
+    const r=responsables[index];
+
+    alert(
+
+        "FICHE DU RESPONSABLE\n\n"+
+
+        "N° : "+r.numero+"\n\n"+
+
+        "Nom : "+
+        r.nom+" "+
+        r.postnom+" "+
+        r.prenom+"\n\n"+
+
+        "Sexe : "+r.sexe+"\n\n"+
+
+        "Téléphone : "+r.telephone+"\n\n"+
+
+        "Email : "+
+        (r.email||"Non renseigné")+
+        "\n\n"+
+
+        "Commune : "+r.commune+"\n\n"+
+
+        "Adresse : "+
+        (r.adresse||"Non renseignée")+
+        "\n\n"+
+
+        "Fonction : "+r.fonction+"\n\n"+
+
+        "Organisation : "+
+        (r.organisation||"Non renseignée")+
+        "\n\n"+
+
+        "Statut : "+r.statut
+    );
+
+}
+
+
+/* =====================================================
+   SUPPRIMER RESPONSABLE
+===================================================== */
+
+function supprimerResponsable(index){
+
+    if(!confirm(
+        "Voulez-vous supprimer ce responsable ?"
+    ))return;
+
+    responsables.splice(index,1);
+
+    localStorage.setItem(
+        "responsablesUSN",
+        JSON.stringify(responsables)
+    );
+
+    afficherListeResponsables();
+
+    actualiserTableau();
+
+}
+
+
+/* =====================================================
+   MODIFIER RESPONSABLE
+===================================================== */
+
+function modifierResponsable(index){
+
+    const r=responsables[index];
+
+    nouveauResponsable();
+
+    document.getElementById(
+        "numeroResponsable"
+    ).value=r.numero;
+
+    document.getElementById(
+        "dateResponsable"
+    ).value=r.date||"";
+
+    document.getElementById(
+        "nomResponsable"
+    ).value=r.nom||"";
+
+    document.getElementById(
+        "postnomResponsable"
+    ).value=r.postnom||"";
+
+    document.getElementById(
+        "prenomResponsable"
+    ).value=r.prenom||"";
+
+    document.getElementById(
+        "sexeResponsable"
+    ).value=r.sexe||"";
+
+    document.getElementById(
+        "naissanceResponsable"
+    ).value=r.naissance||"";
+
+    document.getElementById(
+        "telephoneResponsable"
+    ).value=r.telephone||"";
+
+    document.getElementById(
+        "emailResponsable"
+    ).value=r.email||"";
+
+    document.getElementById(
+        "communeResponsable"
+    ).value=r.commune||"";
+
+    document.getElementById(
+        "adresseResponsable"
+    ).value=r.adresse||"";
+
+    document.getElementById(
+        "fonctionResponsable"
+    ).value=r.fonction||"";
+
+    document.getElementById(
+        "priseFonction"
+    ).value=r.priseFonction||"";
+
+    document.getElementById(
+        "statutResponsable"
+    ).value=r.statut||"En attente";
+
+    document.getElementById(
+        "observationResponsable"
+    ).value=r.observation||"";
+
+    chargerOrganisationsResponsable();
+
+    const oi=organisations.findIndex(
+        o=>o.numero===r.numeroOrganisation
+    );
+
+    if(oi>=0){
+
+        document.getElementById(
+            "organisationResponsable"
+        ).value=oi;
+
+    }
+
+    const form=
+        document.getElementById(
+            "formResponsable"
+        );
+
+    form.onsubmit=function(e){
+
+        e.preventDefault();
+
+        const oi=
+            document.getElementById(
+                "organisationResponsable"
+            ).value;
+
+        const org=
+            oi!==""
+            ?organisations[oi]
+            :null;
+
+        r.date=
+            document.getElementById(
+                "dateResponsable"
+            ).value;
+
+        r.nom=
+            document.getElementById(
+                "nomResponsable"
+            ).value.trim();
+
+        r.postnom=
+            document.getElementById(
+                "postnomResponsable"
+            ).value.trim();
+
+        r.prenom=
+            document.getElementById(
+                "prenomResponsable"
+            ).value.trim();
+
+        r.sexe=
+            document.getElementById(
+                "sexeResponsable"
+            ).value;
+
+        r.naissance=
+            document.getElementById(
+                "naissanceResponsable"
+            ).value;
+
+        r.telephone=
+            document.getElementById(
+                "telephoneResponsable"
+            ).value.trim();
+
+        r.email=
+            document.getElementById(
+                "emailResponsable"
+            ).value.trim();
+
+        r.commune=
+            document.getElementById(
+                "communeResponsable"
+            ).value.trim();
+
+        r.adresse=
+            document.getElementById(
+                "adresseResponsable"
+            ).value.trim();
+
+        r.fonction=
+            document.getElementById(
+                "fonctionResponsable"
+            ).value.trim();
+
+        r.priseFonction=
+            document.getElementById(
+                "priseFonction"
+            ).value;
+
+        r.statut=
+            document.getElementById(
+                "statutResponsable"
+            ).value;
+
+        r.observation=
+            document.getElementById(
+                "observationResponsable"
+            ).value.trim();
+
+        r.organisation=
+            org?org.nom:"";
+
+        r.numeroOrganisation=
+            org?org.numero:"";
+
+        localStorage.setItem(
+            "responsablesUSN",
+            JSON.stringify(responsables)
+        );
+
+        form.onsubmit=null;
+
+        form.reset();
+
+        alert(
+            "Responsable modifié avec succès."
+        );
+
+        afficherResponsables();
+
+        actualiserTableau();
+
+    };
+
+}
+
+
+/* =====================================================
+   CARTE RESPONSABLE
+===================================================== */
+
+function carteResponsable(index){
+
+    const r=responsables[index];
+
+    const win=window.open("","_blank");
+
+    if(!win){
+
+        alert(
+            "Veuillez autoriser les fenêtres contextuelles dans Chrome."
+        );
+
+        return;
+    }
+
+    const base=
+        location.href.substring(
+            0,
+            location.href.lastIndexOf("/")+1
+        );
+
+    win.document.write(`
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Carte ${r.numero}</title>
+
+<style>
+
+@page{
+size:A4;
+margin:15mm;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#eee;
+margin:0;
+}
+
+.carte{
+width:86mm;
+height:54mm;
+margin:30mm auto;
+background:white;
+border:3px solid #1e3a8a;
+border-radius:10px;
+padding:8px;
+position:relative;
+overflow:hidden;
+}
+
+.carte:before{
+content:"";
+position:absolute;
+inset:0;
+background:url('${base}logo-usn.png')
+center/120px no-repeat;
+opacity:.08;
+}
+
+.contenu{
+position:relative;
+z-index:2;
+}
+
+.logo{
+width:42px;
+height:42px;
+object-fit:contain;
+display:block;
+margin:auto;
+}
+
+h1{
+font-size:10px;
+text-align:center;
+color:#1e3a8a;
+margin:3px 0;
+}
+
+.titre{
+font-size:8px;
+text-align:center;
+font-weight:bold;
+}
+
+.numero{
+text-align:center;
+font-size:9px;
+font-weight:bold;
+margin:4px;
+color:#b91c1c;
+}
+
+.nom{
+text-align:center;
+font-size:12px;
+font-weight:bold;
+margin:4px;
+}
+
+.info{
+font-size:7px;
+line-height:1.4;
+}
+
+.footer{
+position:absolute;
+bottom:4px;
+left:5px;
+right:5px;
+font-size:6px;
+text-align:center;
+border-top:1px solid #ddd;
+padding-top:2px;
+}
+
+.imprimer{
+text-align:center;
+}
+
+.imprimer button{
+padding:10px 20px;
+background:#1e3a8a;
+color:white;
+border:0;
+border-radius:6px;
+}
+
+@media print{
+
+body{
+background:white;
+}
+
+.imprimer{
+display:none;
+}
+
+.carte{
+margin:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="carte">
+
+<div class="contenu">
+
+<img src="${base}logo-usn.png"
+class="logo">
+
+<h1>
+UNION SACRÉE DE LA NATION
+</h1>
+
+<div class="titre">
+SECRÉTARIAT EXÉCUTIF URBAIN – LUBUMBASHI
+</div>
+
+<div class="numero">
+${r.numero}
+</div>
+
+<div class="nom">
+${r.nom} ${r.postnom} ${r.prenom}
+</div>
+
+<div class="info">
+
+<strong>Fonction :</strong>
+${r.fonction}<br>
+
+<strong>Organisation :</strong>
+${r.organisation||"Non renseignée"}<br>
+
+<strong>Téléphone :</strong>
+${r.telephone}<br>
+
+<strong>Commune :</strong>
+${r.commune}<br>
+
+<strong>Statut :</strong>
+${r.statut}
+
+</div>
+
+<div class="footer">
+CARTE OFFICIELLE DE RESPONSABLE — USN LUBUMBASHI
+</div>
+
+</div>
+
+</div>
+
+<div class="imprimer">
+
+<button onclick="window.print()">
+🖨️ IMPRIMER / ENREGISTRER EN PDF
+</button>
+
+<button onclick="telechargerDocument()">
+⬇️ TÉLÉCHARGER LA CARTE
+</button>
+
+<button onclick="partagerDocument()">
+📤 ENVOYER / PARTAGER
+</button>
+
+<p style="font-size:11px;color:#475569;max-width:700px;margin:10px auto;line-height:1.5">
+Le bouton PDF ouvre l'impression Chrome : choisissez <strong>Enregistrer au format PDF</strong>. Sur téléphone, le bouton Partager permet d'envoyer directement le fichier si le navigateur le permet.
+</p>
+
+</div>
+
+${"<scr"+"ipt>"}
+function documentHTML(){
+    return "<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+}
+
+function telechargerDocument(){
+    const blob=new Blob([documentHTML()],{type:"text/html;charset=utf-8"});
+    const lien=document.createElement("a");
+    lien.href=URL.createObjectURL(blob);
+    lien.download="Carte-${r.numero}.html";
+    document.body.appendChild(lien);
+    lien.click();
+    lien.remove();
+    setTimeout(()=>URL.revokeObjectURL(lien.href),1000);
+}
+
+async function partagerDocument(){
+    const blob=new Blob([documentHTML()],{type:"text/html;charset=utf-8"});
+    const fichier=new File([blob],"Carte-${r.numero}.html",{type:"text/html"});
+
+    try{
+        if(navigator.share && navigator.canShare && navigator.canShare({files:[fichier]})){
+            await navigator.share({
+                title:"Carte ${r.numero}",
+                text:"Carte officielle de responsable - ${r.nom} ${r.postnom} ${r.prenom}",
+                files:[fichier]
+            });
+            return;
+        }
+    }catch(e){
+        if(e.name==="AbortError")return;
+    }
+
+    telechargerDocument();
+
+    const message="Carte ${r.numero} - ${r.nom} ${r.postnom} ${r.prenom}. Le fichier vient d'être téléchargé. Veuillez joindre le fichier à votre message.";
+
+    try{await navigator.clipboard.writeText(message);}catch(e){}
+
+    window.open(
+        "https://wa.me/?text="+encodeURIComponent(message),
+        "_blank"
+    );
+}
+${"</scr"+"ipt>"}
+
+</body>
+
+</html>
+
+`);
+
+    win.document.close();
+
+}
+
+
+/* =====================================================
+   TABLEAU DE BORD
+===================================================== */
+
+function actualiserTableau(){
+
+    document.getElementById("total").textContent=
+        organisations.length;
+
+    document.getElementById("totalASBL").textContent=
+        organisations.filter(
+            o=>o.type==="ASBL"
+        ).length;
+
+    document.getElementById("totalFondations").textContent=
+        organisations.filter(
+            o=>o.type==="Fondation"
+        ).length;
+
+    document.getElementById("totalMouvements").textContent=
+        organisations.filter(
+            o=>o.type==="Mouvement"
+        ).length;
+
+    document.getElementById("totalResponsables").textContent=
+        responsables.length;
+
+    document.getElementById("totalAttente").textContent=
+        organisations.filter(
+            o=>
+            o.statut==="En attente" ||
+            o.statut==="En vérification"
+        ).length;
+
+    document.getElementById("totalValides").textContent=
+        organisations.filter(
+            o=>o.statut==="Validé"
+        ).length;
+
+}
+
+
+/* =====================================================
+   CERTIFICAT
+===================================================== */
+
+function certificat(index){
+
+    const o=organisations[index];
+
+    const c=JSON.parse(
+        localStorage.getItem(
+            "commissionUSNLubumbashi"
+        )
+    )||{};
+
+    const domaines=o.domaines?.length
+        ?o.domaines.join(", ")
+        :"Non renseigné";
+
+    const verification=encodeURIComponent(
+        "USN LUBUMBASHI | "+
+        o.numero+" | "+
+        o.nom
+    );
+
+    const win=window.open("","_blank");
+
+    if(!win){
+
+        alert(
+            "Veuillez autoriser les fenêtres contextuelles dans Chrome."
+        );
+
+        return;
+    }
+
+    const base=
+        location.href.substring(
+            0,
+            location.href.lastIndexOf("/")+1
+        );
+
+    win.document.write(`
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>${o.numero} - Certificat</title>
+
+<style>
+
+@page{
+size:A4;
+margin:12mm;
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#eee;
+}
+
+.certificat{
+width:210mm;
+min-height:297mm;
+margin:auto;
+background:white;
+padding:18mm;
+border:7px double #1e3a8a;
+position:relative;
+}
+
+.header{
+text-align:center;
+border-bottom:3px solid #1e3a8a;
+padding-bottom:12px;
+}
+
+.header-logo{
+width:90px;
+height:90px;
+object-fit:contain;
+display:block;
+margin:auto;
+}
+
+.header h1{
+color:#1e3a8a;
+margin:5px;
+font-size:25px;
+}
+
+.header h2{
+margin:5px;
+font-size:18px;
+}
+
+.header h3{
+margin:4px;
+font-size:14px;
+}
+
+.title{
+text-align:center;
+margin-top:25px;
+}
+
+.title h1{
+font-size:27px;
+color:#1e3a8a;
+}
+
+.number{
+display:block;
+width:max-content;
+margin:15px auto;
+padding:9px 25px;
+border:2px solid #1e3a8a;
+font-weight:bold;
+color:#1e3a8a;
+}
+
+.intro{
+text-align:center;
+line-height:1.6;
+font-size:13px;
+}
+
+.organisation{
+margin-top:18px;
+padding:14px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+}
+
+.organisation h2{
+text-align:center;
+color:#1e3a8a;
+}
+
+.line{
+padding:6px;
+border-bottom:1px solid #ddd;
+font-size:12px;
+}
+
+.line strong{
+color:#1e3a8a;
+}
+
+.commission{
+margin-top:17px;
+border:2px solid #1e3a8a;
+padding:12px;
+background:#f8fafc;
+}
+
+.commission h3{
+text-align:center;
+color:#1e3a8a;
+}
+
+.members{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px 15px;
+font-size:11px;
+}
+
+.members div{
+padding:6px;
+border-bottom:1px solid #ddd;
+}
+
+.declaration{
+font-size:12px;
+line-height:1.6;
+text-align:justify;
+margin-top:15px;
+}
+
+.qr{
+text-align:center;
+margin-top:10px;
+}
+
+.qr img{
+width:75px;
+height:75px;
+}
+
+.signatures{
+display:flex;
+justify-content:space-between;
+text-align:center;
+margin-top:20px;
+}
+
+.signature{
+width:45%;
+font-size:11px;
+}
+
+.line-sign{
+margin-top:35px;
+border-top:1px solid #222;
+padding-top:5px;
+}
+
+.footer{
+position:absolute;
+bottom:8mm;
+left:18mm;
+right:18mm;
+border-top:1px solid #ccc;
+padding-top:5px;
+text-align:center;
+font-size:8px;
+}
+
+.print{
+text-align:center;
+padding:15px;
+}
+
+.print button{
+padding:12px 25px;
+background:#1e3a8a;
+color:white;
+border:0;
+border-radius:7px;
+}
+
+@media print{
+
+body{
+background:white;
+}
+
+.print{
+display:none;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="certificat">
+
+<div class="header">
+
+<img src="${base}logo-usn.png"
+class="header-logo">
+
+<h1>
+UNION SACRÉE DE LA NATION
+</h1>
+
+<h2>
+SECRÉTARIAT EXÉCUTIF URBAIN – LUBUMBASHI
+</h2>
+
+<h3>
+SECRÉTARIAT EXÉCUTIF ADJOINT
+</h3>
+
+<h3>
+EN CHARGE DES ASBL, FONDATIONS ET MOUVEMENTS
+</h3>
+
+</div>
+
+<div class="title">
+
+<h1>
+CERTIFICAT D'IDENTIFICATION
+</h1>
+
+<p>
+COMMISSION D'IDENTIFICATION DES ASBL,
+FONDATIONS ET MOUVEMENTS
+</p>
+
+</div>
+
+<div class="number">
+N° ${o.numero}
+</div>
+
+<div class="intro">
+
+Il est certifié que la structure ci-dessous
+est enregistrée dans le registre
+d'identification des ASBL,
+Fondations et Mouvements
+de la Ville de Lubumbashi.
+
+</div>
+
+<div class="organisation">
+
+<h2>${o.nom}</h2>
+
+<div class="line">
+<strong>Type :</strong> ${o.type}
+</div>
+
+<div class="line">
+<strong>Sigle :</strong>
+${o.sigle||"Non renseigné"}
+</div>
+
+<div class="line">
+<strong>Responsable :</strong>
+${o.responsable||""}
+${o.postnom||""}
+${o.prenom||""}
+</div>
+
+<div class="line">
+<strong>Téléphone :</strong>
+${o.telephone||"Non renseigné"}
+</div>
+
+<div class="line">
+<strong>Commune :</strong>
+${o.commune||"Non renseignée"}
+</div>
+
+<div class="line">
+<strong>Quartier :</strong>
+${o.quartier||"Non renseigné"}
+</div>
+
+<div class="line">
+<strong>Avenue :</strong>
+${o.avenue||"Non renseignée"}
+</div>
+
+<div class="line">
+<strong>Domaines :</strong>
+${domaines}
+</div>
+
+<div class="line">
+<strong>Date d'identification :</strong>
+${o.date}
+</div>
+
+<div class="line">
+<strong>Statut :</strong>
+${o.statut}
+</div>
+
+</div>
+
+<div class="commission">
+
+<h3>COMMISSION D'IDENTIFICATION</h3>
+
+<div class="members">
+
+<div>
+<strong>Président :</strong>
+${c.president||"Non renseigné"}
+</div>
+
+<div>
+<strong>Membre 1 :</strong>
+${c.membre1||"Non renseigné"}
+</div>
+
+<div>
+<strong>Membre 2 :</strong>
+${c.membre2||"Non renseigné"}
+</div>
+
+<div>
+<strong>Membre 3 :</strong>
+${c.membre3||"Non renseigné"}
+</div>
+
+<div>
+<strong>Membre 4 :</strong>
+${c.membre4||"Non renseigné"}
+</div>
+
+<div>
+<strong>Membre 5 :</strong>
+${c.membre5||"Non renseigné"}
+</div>
+
+</div>
+
+</div>
+
+<div class="declaration">
+
+La présente pièce est délivrée dans le cadre
+de l'identification et de l'enregistrement
+des ASBL, Fondations et Mouvements
+au niveau de la Ville de Lubumbashi.
+
+</div>
+
+<div class="qr">
+
+<img
+src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${verification}"
+alt="QR Code">
+
+<p>
+Référence : ${o.numero}
+</p>
+
+</div>
+
+<div class="signatures">
+
+<div class="signature">
+
+<strong>
+PRÉSIDENT DE LA COMMISSION
+</strong>
+
+<div class="line-sign">
+Signature et cachet
+</div>
+
+</div>
+
+<div class="signature">
+
+<strong>
+SECRÉTARIAT EXÉCUTIF ADJOINT
+</strong>
+
+<div class="line-sign">
+ASBL, FONDATIONS ET MOUVEMENTS
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+UNION SACRÉE DE LA NATION —
+SECRÉTARIAT EXÉCUTIF URBAIN – LUBUMBASHI
+
+</div>
+
+</div>
+
+<div class="print">
+
+<button onclick="window.print()">
+🖨️ IMPRIMER / ENREGISTRER EN PDF
+</button>
+
+<button onclick="telechargerDocument()">
+⬇️ TÉLÉCHARGER LE CERTIFICAT
+</button>
+
+<button onclick="partagerDocument()">
+📤 ENVOYER / PARTAGER
+</button>
+
+<p style="font-size:11px;color:#475569;max-width:700px;margin:10px auto;line-height:1.5">
+Le bouton PDF ouvre l'impression Chrome : choisissez <strong>Enregistrer au format PDF</strong>. Le téléchargement crée également une copie HTML prête à être envoyée.
+</p>
+
+</div>
+
+${"<scr"+"ipt>"}
+function documentHTML(){
+    return "<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+}
+
+function telechargerDocument(){
+    const blob=new Blob([documentHTML()],{type:"text/html;charset=utf-8"});
+    const lien=document.createElement("a");
+    lien.href=URL.createObjectURL(blob);
+    lien.download="Certificat-${o.numero}.html";
+    document.body.appendChild(lien);
+    lien.click();
+    lien.remove();
+    setTimeout(()=>URL.revokeObjectURL(lien.href),1000);
+}
+
+async function partagerDocument(){
+    const blob=new Blob([documentHTML()],{type:"text/html;charset=utf-8"});
+    const fichier=new File([blob],"Certificat-${o.numero}.html",{type:"text/html"});
+
+    try{
+        if(navigator.share && navigator.canShare && navigator.canShare({files:[fichier]})){
+            await navigator.share({
+                title:"Certificat ${o.numero}",
+                text:"Certificat d'identification - ${o.nom}",
+                files:[fichier]
+            });
+            return;
+        }
+    }catch(e){
+        if(e.name==="AbortError")return;
+    }
+
+    telechargerDocument();
+
+    const message="Certificat ${o.numero} - ${o.nom}. Le fichier vient d'être téléchargé. Veuillez joindre le fichier à votre message.";
+
+    try{await navigator.clipboard.writeText(message);}catch(e){}
+
+    window.open(
+        "https://wa.me/?text="+encodeURIComponent(message),
+        "_blank"
+    );
+}
+${"</scr"+"ipt>"}
+
+</body>
+
+</html>
+
+`);
+
+    win.document.close();
+
+}
+
+
+/* =====================================================
+   DÉMARRAGE
+===================================================== */
+
+chargerCommission();
+
+afficherListe();
+
+afficherListeResponsables();
+
+actualiserTableau();
+
+chargerOrganisationsResponsable();
+
+if(new URLSearchParams(window.location.search).get("inscription")==="1"){
+    afficherInscriptionPublique();
+}
+
+</script>
+
+</body>
+</html>
